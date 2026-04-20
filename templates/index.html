@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Health Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Auth View -->
+        <div id="auth-view" class="view active">
+            <div class="auth-container glass">
+                <h2>Welcome to Nexus</h2>
+                <p class="subtitle">Your intelligent body composition tracker</p>
+                
+                <div class="tabs">
+                    <button class="tab active" onclick="switchAuthTab('login')">Login</button>
+                    <button class="tab" onclick="switchAuthTab('register')">Register</button>
+                </div>
+
+                <form id="auth-form" onsubmit="handleAuth(event)">
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="primary-btn" id="auth-btn">Login</button>
+                </form>
+                <div id="auth-error" class="error-msg"></div>
+            </div>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view">
+            <nav class="navbar glass">
+                <div class="logo">Nexus Health</div>
+                <div class="nav-controls" style="display:flex; gap:1rem; align-items:center;">
+                    <select id="userSelector" class="outline-btn" style="background:rgba(0,0,0,0.2); appearance:auto;" onchange="loadDashboardData()"></select>
+                    <button class="outline-btn" onclick="logout()">Logout</button>
+                </div>
+            </nav>
+
+            <main class="dashboard-content">
+                <div class="upload-section glass">
+                    <h3>Update Your Metrics</h3>
+                    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+                        <div class="upload-icon">📄</div>
+                        <p>Drag & drop your InBody result here or click to browse</p>
+                        <input type="file" id="file-input" hidden accept="image/*" onchange="handleFileSelect(event)">
+                    </div>
+                    <div id="upload-status" class="status-msg"></div>
+                </div>
+
+                <!-- Stats Grid matching Xiaomi app -->
+                <div id="statsGrid" class="stats-grid"></div>
+
+                <!-- Modal for displaying trend charts -->
+                <div id="chartModal" class="modal hidden">
+                    <div class="modal-content glass">
+                        <div class="modal-header">
+                            <h3 id="modalChartTitle">Trend</h3>
+                            <button class="close-btn" onclick="closeModal()">&times;</button>
+                        </div>
+                        <div class="chart-container-large">
+                            <canvas id="modalChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
