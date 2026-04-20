@@ -33,7 +33,7 @@ def extract_health_data_from_image(image_path: str):
             "estimated_waist_to_hip_ratio, body_age, fat_free_body_weight, heart_rate."
         )
 
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={API_KEY}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key={API_KEY}"
         headers = {'Content-Type': 'application/json'}
         payload = {
             "contents": [{
